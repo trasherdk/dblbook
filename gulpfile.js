@@ -2,23 +2,23 @@
 var gulp = require("gulp");
 var gutil = require("gulp-util");
 var webpack = require('webpack');
-var gulpWebpack = require('gulp-webpack');
+var gulpWebpack = require('webpack-stream');
 var execFile = require('child_process').execFile;
 var flow = require('flow-bin');
 
-gulp.task('default', ['flow:check', 'copy'], function() {
+gulp.task('default', ['flow:check', 'copy'], function () {
   doWebpack(webpackProdConfig);
 });
 
-gulp.task('dev', ['flow:start'], function() {
+gulp.task('dev', ['flow:start'], function () {
   doWebpack(webpackDevConfig);
   gulp.watch(['app/**/*.jsx?', 'model/**/*.js', 'tests/tests.js'],
-             ['flow:status']);
+    ['flow:status']);
   gulp.watch(['app/*.html', 'app/*.css'],
-             ['copy']);
+    ['copy']);
 });
 
-gulp.task('copy', function() {
+gulp.task('copy', function () {
   gulp.src([
     'bower_components/pure/pure-min.css',])
     .pipe(gulp.dest('build/css'));
@@ -39,32 +39,32 @@ gulp.task('copy', function() {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('typecheck', function(callback) {
-  runFlow(['start'], function() {
+gulp.task('typecheck', function (callback) {
+  runFlow(['start'], function () {
     runFlow(['status', '--no-auto-start'], callback);
   })
 });
 
-gulp.task('flow:status', function(callback) {
+gulp.task('flow:status', function (callback) {
   runFlow(['status', '--no-auto-start'], callback);
 });
 
-gulp.task('flow:check', function(callback) {
+gulp.task('flow:check', function (callback) {
   runFlow(['check'], callback);
 })
 
-gulp.task('flow:start', function(callback) {
+gulp.task('flow:start', function (callback) {
   runFlow(['start'], callback);
 });
 
-gulp.task('flow:stop', function(callback) {
+gulp.task('flow:stop', function (callback) {
   runFlow(['stop'], callback);
 })
 
-function runFlow(cmd, callback) {
+function runFlow (cmd, callback) {
   execFile(flow, cmd, {
     cwd: module.__dirname
-  }, function(err, stdout, stderr) {
+  }, function (err, stdout, stderr) {
     if (err && stdout.length > 0) {
       callback(new gutil.PluginError('flow', stdout));
     }
@@ -125,14 +125,14 @@ var webpackProdConfig = {
   ]
 }
 
-function merge(obj1, obj2) {
+function merge (obj1, obj2) {
   var ret = {};
   for (var attrname in obj1) { ret[attrname] = obj1[attrname]; }
   for (var attrname in obj2) { ret[attrname] = obj2[attrname]; }
   return ret;
 }
 
-function doWebpack(opts) {
+function doWebpack (opts) {
   return gulp.src(['app/jsx/index.js', 'tests/tests.js'])
     .pipe(gulpWebpack(merge(webpackConfig, opts), webpack))
     .pipe(gulp.dest('.'));
