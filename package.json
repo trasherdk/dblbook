@@ -2,9 +2,21 @@
   "name": "dblbook",
   "version": "0.0.1",
   "description": "a double-entry accounting app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haberman/dblbook.git"
+  },
+  "author": "Josh Haberman <jhaberman@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/haberman/dblbook/issues"
+  },
+  "homepage": "https://github.com/haberman/dblbook#readme",
   "main": "gulpfile.js",
   "directories": {
     "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "babel": "^5.8.38",
@@ -26,17 +38,5 @@
     "react-router": "^6.4.5",
     "webpack": "^5.75.0",
     "webpack-stream": "^7.0.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/haberman/dblbook.git"
-  },
-  "author": "Josh Haberman <jhaberman@gmail.com>",
-  "bugs": {
-    "url": "https://github.com/haberman/dblbook/issues"
-  },
-  "homepage": "https://github.com/haberman/dblbook#readme"
+  }
 }
